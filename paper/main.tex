@@ -30,7 +30,7 @@ change every transition probability by a factor in $[1-\eps,1+\eps]$, depending 
 maximum expected hitting time by more than a constant factor. He asked for its value on hypercubes. For the simple
 random walk on $\{0,1\}^d$ we show that the strongest such adversary with $\eps=c/d$ raises the maximum hitting time by
 a factor tending to $2^c$. Hence the largest $\eps$ for which the factor stays at most $C$ is $(\log_2 C+o(1))/d$. For
-the lazy walk the factor tends to $e^c$ and the threshold is $(\ln C+o(1))/d$. Both are of order one over the
+the lazy walk the factor tends to $e^c$ and that largest $\eps$ is $(\ln C+o(1))/d$. Both are of order one over the
 diameter, which confirms on the hypercube Zuckerman's conjecture that the robustness of every graph is at least of that
 order.
 \end{abstract}
@@ -48,26 +48,30 @@ $\thit=\max_{u,v}\E_uH_v$ for the unperturbed walk. The \emph{hitting-time robus
 \[
 \rhit(C)=\sup\{\eps:\ \thit^+(\eps)\le C\,\thit\}.
 \]
+When $C$ is omitted, $C$ is a sufficiently large constant, as in~\cite[Definition~1.9]{Zuc26}.
 Zuckerman proved $\rhit=\Omega(1/t_{\mathrm{mix}})$ for every graph~\cite[Theorem~1.10]{Zuc26}, where
 $t_{\mathrm{mix}}$ is the mixing time (of the lazy walk when $G$ is bipartite~\cite[Remark~2.9]{Zuc26}), and
-$\rhit=\Theta(1/\log n)$ for constant-degree expanders on $n$ vertices~\cite[Theorem~1.12]{Zuc26}. He conjectured $\rhit=\Omega(1/\Delta)$ with $\Delta$ the diameter, and listed the hypercube
+$\rhit=\Theta(1/\log n)$ for constant-degree expanders on $n$ vertices~\cite[Theorem~1.12]{Zuc26}. He conjectured $\rhit=\Omega(1/\Delta)$ with $\Delta$ the diameter, proved it for trees~\cite[Theorem~1.11]{Zuc26}, and listed the hypercube
 among the natural graphs whose robustness is to be determined~\cite[Section~1.10]{Zuc26}.
 
-On the hypercube $Q_d=\{0,1\}^d$ ($n=2^d$, $\Delta=d$) the general results leave a gap. The lazy walk on $Q_d$ mixes
-in time $\Theta(d\log d)$~\cite[Section~18.2]{LPW17}, so the lower bound is $\Omega(1/(d\log d))$. The adversary in the
-proof of~\cite[Theorem~4.5]{Zuc26} tilts each step away from the target. On $Q_d$ its transition probabilities lie in
-$[(1-\eps)/d,\,1/((1-\eps)d)]$, so it is a standard $\eps/(1-\eps)$-adversary, and since the average distance is $d/2$
-it multiplies $\thit$ by about $e^{\eps d/2}$; hence $\rhit=O(1/d)$. We close the gap and find the constant.
-
-The proof of~\cite[Theorem~1.10]{Zuc26} compares the perturbed walk with the original over a mixing period, and on
-$Q_d$ that period is $\Theta(d\log d)$, which is where the logarithm is lost. We instead compute $\thit^+$ exactly. A
-supermartingale argument shows that the optimal adversary acts on the Hamming distance to the target alone, so
-$\thit^+$ is the expected hitting time of a birth--death chain with stationary weights $w_0,\dots,w_d$, and
-\[
-\thit^+=\sum_{j=0}^dw_j\,(1+o(1)),\qquad \ln\frac{w_j}{\binom dj}=c\,F(j/d)+O(1/d)\quad(\eps=c/d),
-\]
-with an explicit bounded function $F$ (Lemmas~\ref{lem:reduction}--\ref{lem:tail}). The binomial weights concentrate
-at $j=d/2$, where $F=\ln2$, and this gives the constant.
+On the hypercube $Q_d=\{0,1\}^d$, where $n=2^d$ and $\Delta=d$, these results leave a logarithmic gap. The lazy walk
+on $Q_d$ mixes in time $\Theta(d\log d)$~\cite[Section~18.2]{LPW17}, so~\cite[Theorem~1.10]{Zuc26} gives
+$\rhit=\Omega(1/(d\log d))$. In the other direction, the adversary constructed in the proof of~\cite[Theorem~4.5]{Zuc26},
+which we call the tilted adversary, moves each step away from the target. On $Q_d$ its transition probabilities lie in
+$[(1-\eps)/d,\,1/((1-\eps)d)]$, so it is a standard $\eps/(1-\eps)$-adversary, and it multiplies $\thit$ by about
+$e^{\eps d/2}$. This gives $\rhit=O(1/d)$. The proof of~\cite[Theorem~1.10]{Zuc26} compares the perturbed walk with the
+original over a mixing period, which on $Q_d$ has length of order $d\log d$, and the logarithm is lost there. On $Q_d$
+the supremum over adversaries can be computed instead. Call \emph{extremal} the adversary that at every vertex sends the
+least mass toward the target that the bounds allow. A supermartingale comparison (Lemma~\ref{lem:reduction}) shows that
+the extremal adversary attains the supremum. It depends only on the distance to the target, and under it the distance is
+a birth--death chain on $\{0,\dots,d\}$ with stationary weights $w_0=1,w_1,\dots,w_d$. For $\eps=c/d$, uniformly in $j$,
+\begin{gather*}
+\thit^+(\eps)=W\,(1+o(1)),\qquad W=\sum_{j=0}^dw_j,\\
+\ln\frac{w_j}{\binom dj}=c\,F\Bigl(\frac jd\Bigr)+O\Bigl(\frac1d\Bigr),\qquad
+F(x)=\begin{cases}-\ln(1-x),&0\le x\le\frac12,\\ \ln(4x),&\frac12\le x\le1\end{cases}
+\end{gather*}
+(Lemmas~\ref{lem:reduction}--\ref{lem:tail}). At $\eps=0$ the weights are $\binom dj$, with sum $2^d$; they concentrate
+at $j=d/2$, where $F=\ln2$, so $\thit^+/\thit\to e^{c\ln2}=2^c$.
 
 \begin{theorem}\label{thm:main}
 For the simple random walk on $Q_d$ and $\eps=c/d$ with $c>0$ fixed,
@@ -79,24 +83,23 @@ Consequently $d\,\rhit(C)\to\log_2 C$ for every $C>1$.
 
 \begin{theorem}\label{thm:lazy}
 For the lazy walk on $Q_d$ (holding probability $1/2$, each neighbour $1/(2d)$; the adversary also perturbs the holding
-probability by a factor in $[1-\eps,1+\eps]$) and $\eps=c/d$, the ratio $\thit^+(c/d)/\thit$ tends to $e^{c}$, and
-$d\,\rhit(C)\to\ln C$.
+probability by a factor in $[1-\eps,1+\eps]$, and $\thit$, $\thit^+$ refer to the lazy walk) and $\eps=c/d$ with $c>0$
+fixed, the ratio $\thit^+(c/d)/\thit$ tends to $e^{c}$, and $d\,\rhit(C)\to\ln C$ for every $C>1$.
 \end{theorem}
 
 In both cases $\rhit$ is of order $1/\Delta$, so the hypercube satisfies the conjecture $\rhit=\Omega(1/\Delta)$
-of~\cite{Zuc26}, with explicit constants. The optimal adversary is the one in Lemma~\ref{lem:reduction}, which at every
-vertex sends as little mass toward the target as the bounds allow. It is stronger than the tilted adversary
-of~\cite[Theorem~4.5]{Zuc26}: it multiplies $\thit$ by $e^{\eps d\ln 2}$ against about $e^{\eps d/2}$, so the limit
+of~\cite{Zuc26}, with explicit constants. The extremal adversary is stronger than the tilted adversary: it multiplies $\thit$ by $e^{\eps d\ln 2}$ against about $e^{\eps d/2}$, so the limit
 $\log_2C$ of $d\,\rhit(C)$ lies below the bound $2\ln C$ that the tilted adversary gives.
 
 Theorem~\ref{thm:main} can also be stated through stationary probabilities. The walk on $Q_d$ gives the target $0$
-stationary probability $\pi(0)=2^{-d}$. Under the adversary of Lemma~\ref{lem:reduction} the walk is again a Markov
-chain, and its stationary probability of $0$ is $\pi^+(0)=1/W$, with $W$ as in Section~\ref{sec:proof}. The proof
-shows $\thit\sim1/\pi(0)$ and $\thit^+\sim1/\pi^+(0)$, so Theorem~\ref{thm:main} says
+stationary probability $\pi(0)=2^{-d}$. Under the extremal adversary the walk is again a Markov
+chain, and its stationary probability of $0$ is $\pi^+(0)=1/W$. By $T_1=W-1$ and Lemma~\ref{lem:tail},
+$\thit\sim2^d=1/\pi(0)$ and $\thit^+\sim W=1/\pi^+(0)$, so Theorem~\ref{thm:main} says
 $\pi^+(0)=\pi(0)^{1+\eps+o(\eps)}$ at $\eps=c/d$. Azar, Broder,
 Karlin, Linial and Phillips~\cite{ABKLP96}, in a related model where a controller chooses the step with probability
 $\eps$, showed that on bounded-degree graphs the controller can raise the stationary probability of a vertex $v$ to
-$\pi(v)^{1-\Omega(\eps)}$. The hypercube has unbounded degree, the adversary here lowers the probability of the target,
+$\pi(v)^{1-\Omega(\eps)}$, and Haslegrave, Sauerwald and Sylvester~\cite{HSS22} extended this to further
+settings. The hypercube has unbounded degree, the adversary here lowers the probability of the target,
 and the exponent is exact.
 
 \section{Reduction to a birth--death chain}\label{sec:reduction}
@@ -111,21 +114,21 @@ from $k$, and $T_k=V_k-V_{k-1}$ the expected time to go from $k$ to $k-1$. Then 
 $T_k=(1+p_kT_{k+1})/q_k$, and in particular every $T_k$ is positive, so $V$ is increasing.
 
 \begin{lemma}\label{lem:reduction}
-For every standard $\eps$-adversary and every $v$, $\E_vH_0\le V_{|v|}$, with equality for the adversary that at a
-vertex of weight $k$ gives each of the $k$ neighbours of weight $k-1$ probability $q_k/k$ and each of the $d-k$
+For every standard $\eps$-adversary and every $v$, $\E_vH_0\le V_{|v|}$, with equality for the extremal adversary,
+which at a vertex of weight $k$ gives each of the $k$ neighbours of weight $k-1$ probability $q_k/k$ and each of the $d-k$
 neighbours of weight $k+1$ probability $p_k/(d-k)$. Hence $\thit^+(\eps)=V_d$.
 \end{lemma}
 
 \begin{proof}
-The stated adversary is admissible. For $k\le d/2$, $q_k/k=(1-\eps)/d$ and $p_k/(d-k)=(1+\eps k/(d-k))/d$, which lies
+The extremal adversary is admissible. For $k\le d/2$, $q_k/k=(1-\eps)/d$ and $p_k/(d-k)=(1+\eps k/(d-k))/d$, which lies
 in $[1/d,(1+\eps)/d]$ because $k\le d-k$. For $k>d/2$, $p_k/(d-k)=(1+\eps)/d$ and $q_k/k=(1-\eps(d-k)/k)/d$, which
-lies in $[(1-\eps)/d,1/d]$. Under it $|X_t|$ is the birth--death chain above, so $\E_vH_0=V_{|v|}$.
+lies in $[(1-\eps)/d,1/d]$. Under it $|X_s|$ is the birth--death chain above, so $\E_vH_0=V_{|v|}$.
 
-Now let the adversary be arbitrary and put $U(v)=V_{|v|}$. At a vertex $v\ne0$ of weight $k$, any admissible step
-gives total probability $t\ge q_k$ to the neighbours of weight $k-1$, since each of them receives at least
+Now let the adversary be arbitrary, let $X_s$ be the walk and $\mathcal F_s$ its history up to time $s$, and put
+$U(v)=V_{|v|}$. At a vertex $v\ne0$ of weight $k$, any admissible step gives total probability $m\ge q_k$ to the neighbours of weight $k-1$, since each of them receives at least
 $(1-\eps)/d$ and the others together at most $(d-k)(1+\eps)/d$. As $V_{k-1}<V_{k+1}$,
 \[
-\E\bigl[U(X_{s+1})\,\big|\,\mathcal F_s\bigr]=tV_{k-1}+(1-t)V_{k+1}\le q_kV_{k-1}+p_kV_{k+1}=U(X_s)-1
+\E\bigl[U(X_{s+1})\,\big|\,\mathcal F_s\bigr]=mV_{k-1}+(1-m)V_{k+1}\le q_kV_{k-1}+p_kV_{k+1}=U(X_s)-1
 \]
 on $\{X_s=v\}$, where the last equality is the first-step equation of the birth--death chain (for $k=d$ both sides
 equal $V_{d-1}$). So $U(X_{s\wedge H_0})+s\wedge H_0$ is a supermartingale, and $\E_v[U(X_{s\wedge H_0})]+\E_v[s\wedge
@@ -134,11 +137,33 @@ Finally $\thit^+=\max_{u,v}h^+(u,v)$, the hypercube is vertex-transitive, and $V
 $\thit^+=V_d$.
 \end{proof}
 
-For the lazy walk we redefine $q_k$ and $p_k$, and with them $V_k$, $T_k$ and, in Section~\ref{sec:proof}, $w_j$, $W$
-and $K$. The same argument applies with $q_k=k(1-\eps)/(2d)$, $p_k=(d-k)(1+\eps)/(2d)$ and the remaining mass
-on the holding step: it lies in $[(1-\eps)/2,(1+\eps)/2]$ because it equals $\tfrac12+\eps(2k-d)/(2d)$, and the
-holding step has value $V_k$, between $V_{k-1}$ and $V_{k+1}$, so the extremal choice is again minimal mass toward $0$
-and maximal mass away from it.
+On every graph, history does not help the adversary~\cite[Section~1.4]{Zuc26}; on $Q_d$ this also follows from the
+proof above.
+
+For the lazy walk of Theorem~\ref{thm:lazy} put $\tilde q_k=k(1-\eps)/(2d)$ and $\tilde p_k=(d-k)(1+\eps)/(2d)$, and let
+$\tilde V_k$ be the expected time for the birth--death chain on $\{0,\dots,d\}$ that steps from $k$ to $k-1$ with
+probability $\tilde q_k$, to $k+1$ with probability $\tilde p_k$ and otherwise stays at $k$, to reach $0$ from $k$. Put
+$\tilde T_k=\tilde V_k-\tilde V_{k-1}$. The holding term cancels in the first-step equation, so
+$\tilde T_d=1/\tilde q_d$ and $\tilde T_k=(1+\tilde p_k\tilde T_{k+1})/\tilde q_k$, and $\tilde V$ is increasing.
+
+\begin{lemma}\label{lem:lazy}
+For every adversary of Theorem~\ref{thm:lazy} and every $v$, $\E_vH_0\le\tilde V_{|v|}$, with equality for the
+adversary that at a vertex of weight $k$ gives each neighbour of weight $k-1$ probability $(1-\eps)/(2d)$ and each
+neighbour of weight $k+1$ probability $(1+\eps)/(2d)$. Hence $\thit^+(\eps)=\tilde V_d$ for the lazy walk.
+\end{lemma}
+
+\begin{proof}
+The holding probability of that adversary is $1-\tilde q_k-\tilde p_k=\tfrac12+\eps(2k-d)/(2d)$, which lies in
+$[(1-\eps)/2,(1+\eps)/2]$, so it is admissible, and under it $|X_s|$ is the chain above. For an arbitrary adversary
+let $m_-$, $m_0$, $m_+$ be the masses a step from a vertex of weight $k$ puts on the neighbours of weight $k-1$, on
+holding and on the neighbours of weight $k+1$. Then $m_-\ge\tilde q_k$ and $m_+\le\tilde p_k$, and with
+$U(v)=\tilde V_{|v|}$, since $\tilde V_{k-1}<\tilde V_k<\tilde V_{k+1}$,
+\[
+\E\bigl[U(X_{s+1})\,\big|\,\mathcal F_s\bigr]=m_-\tilde V_{k-1}+m_0\tilde V_k+m_+\tilde V_{k+1}
+\le\tilde q_k\tilde V_{k-1}+(1-\tilde q_k-\tilde p_k)\tilde V_k+\tilde p_k\tilde V_{k+1}=U(X_s)-1 .
+\]
+The rest of the proof of Lemma~\ref{lem:reduction} applies unchanged.
+\end{proof}
 
 \section{Proof of the theorems}\label{sec:proof}
 
@@ -150,7 +175,7 @@ T_k=\frac{1}{q_kw_k}\sum_{j\ge k}w_j\qquad(1\le k\le d).
 For the simple walk $q_0=0$, so $p_0=1=q_1w_1$ and $T_1=W-1$. For $\eps=0$, $w_j=\binom dj$ and $W=2^d$.
 
 \begin{lemma}\label{lem:weights}
-Let $\eps=c/d$. Uniformly in $0\le j\le d$,
+Let $\eps=c/d$ with $c\ge0$ fixed. Uniformly in $0\le j\le d$, with implied constants depending only on $c$,
 \[
 \ln\Bigl(w_j\Big/\binom dj\Bigr)=c\,F(j/d)+O(1/d),\qquad
 F(x)=\begin{cases}-\ln(1-x),&0\le x\le\tfrac12,\\ \ln(4x),&\tfrac12\le x\le1.\end{cases}
@@ -169,7 +194,7 @@ bounded monotone pieces of $g$ with $F(x)=\int_0^xg$ gives the claim.
 In particular $K^{-1}\binom dj\le w_j\le K\binom dj$ for all $j$, with $K=e^{c\ln4+O(1/d)}$ bounded.
 
 \begin{lemma}\label{lem:tail}
-For $\eps=c/d$, $\sum_{k\ge2}T_k=O(W/d+d\log d)$.
+For $\eps=c/d$ with $c\ge0$ fixed, $\sum_{k\ge2}T_k=O(W/d+d\log d)$, the implied constant depending only on $c$.
 \end{lemma}
 
 \begin{proof}
@@ -199,11 +224,13 @@ $\limsup_d d\,\rhit(C)\le c$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:lazy}]
-With the lazy $q_k,p_k$ of Section~\ref{sec:reduction}, $p_i/q_{i+1}=r\,(d-i)/(i+1)$ with $r=(1+\eps)/(1-\eps)$, so
-$w_j=\binom djr^j$ and $W=(1+r)^d=(2/(1-\eps))^d$ exactly. Here $q_1w_1=p_0=(1+\eps)/2$, so $T_1=2(W-1)/(1+\eps)$; the
-proof of Lemma~\ref{lem:tail} applies with $K=r^d=e^{2c+O(1/d)}$. There $q_k=k(1-\eps)/(2d)$ for every $k$, half the
-value used in that proof, so $q_k\ge(1-\eps)/4$ for $k>d/2$ and the constants double; it gives $\sum_{k\ge2}T_k=O(W/d+d\log d)$. At
-$\eps=0$, $T_1=2(2^d-1)$. Therefore
+By Lemma~\ref{lem:lazy}, $\thit^+(\eps)=\tilde V_d=\sum_k\tilde T_k$. Here $\tilde p_i/\tilde q_{i+1}=r\,(d-i)/(i+1)$
+with $r=(1+\eps)/(1-\eps)$, so the weights $\tilde w_j=\prod_{i<j}\tilde p_i/\tilde q_{i+1}$ are $\binom djr^j$ and
+$\tilde W=\sum_j\tilde w_j=(1+r)^d=(2/(1-\eps))^d$ exactly. The recursion for $\tilde T_k$ is the one for $T_k$, so
+\eqref{eq:Tk} holds with tildes; $\tilde q_1\tilde w_1=\tilde p_0=(1+\eps)/2$ gives $\tilde T_1=2(\tilde W-1)/(1+\eps)$.
+The proof of Lemma~\ref{lem:tail} applies with $\tilde K=r^d=e^{2c+O(1/d)}$ in place of $K$; there
+$\tilde q_k=k(1-\eps)/(2d)$ is half the value used in that proof, so $\tilde q_k\ge(1-\eps)/4$ for $k>d/2$ and the
+constants double, and $\sum_{k\ge2}\tilde T_k=O(\tilde W/d+d\log d)$. At $\eps=0$, $\tilde T_1=2(2^d-1)$. Therefore
 \[
 \frac{\thit^+(c/d)}{\thit}=\frac{(1-c/d)^{-d}}{1+c/d}\,(1+o(1))\to e^{c},
 \]
@@ -211,13 +238,14 @@ and $d\,\rhit(C)\to\ln C$ as before.
 \end{proof}
 
 \begin{remark}
-Zuckerman also uses~\cite[Section~1.1]{Zuc26} the interval $[e^{-\eps}P,e^{\eps}P]$. With $\eps=c/d$ the two intervals differ by $O(\eps^2)$ in
-relative terms, which changes each $\ln w_j$ by $O(d\eps^2)=O(1/d)$; the limits in both theorems are unchanged.
+The limits are the same for the interval $[e^{-\eps}P,e^{\eps}P]$, which~\cite[Section~1.1]{Zuc26} also uses: with
+$\eps=c/d$ the two intervals differ by $O(\eps^2)$ in relative terms, which changes each $\ln w_j$ by $O(d\eps^2)=O(1/d)$; the limits in both theorems are unchanged.
 \end{remark}
 
-\section{Exact computations}\label{sec:checks}
+\section{Numerical values}\label{sec:checks}
 
-Lemma~\ref{lem:reduction} reduces $\thit^+$ to a linear recursion, which the program \texttt{rho\_hit.py} in the
+The table shows $d\,\rhit(2)$ within $0.002$ of $1$ from $d=32$ on, while $d\,\rhit(4)$ stays below $2$ at every $d$
+listed and is still about $0.005$ short at $d=512$. Lemma~\ref{lem:reduction} reduces $\thit^+$ to a linear recursion, which the program \texttt{rho\_hit.py} in the
 repository~\cite{Code} solves numerically, finding $\rhit(C)$ by bisection. For the simple walk:
 \begin{center}
 \begin{tabular}{rcccc}
@@ -232,8 +260,7 @@ $d$ & $\thit/2^d$ & $\rhit(2)$ & $d\,\rhit(2)$ & $d\,\rhit(4)$\\\hline
 \end{tabular}
 \end{center}
 For the lazy walk (\texttt{lazy\_check.py}) $d\,\rhit(2)=0.6940$ and $d\,\rhit(4)=1.3871$ at $d=512$, against $\ln2=
-0.6931$ and $\ln4=1.3863$. At $d=3$, $\eps=0$ the recursion gives $V_3=10$, the antipodal hitting time of
-$Q_3$.
+0.6931$ and $\ln4=1.3863$.
 
 \section*{Acknowledgements and funding}
 This work was done by AI agents, Claude (Anthropic), connected to Math Brain and working inside the Brain framework, a
@@ -260,26 +287,26 @@ The programs described in Section~\ref{sec:checks} are in the repository~\cite{C
 This paper is part of a broader research project on AI proving problems. Claude agents (Anthropic) proved
 Theorems~\ref{thm:main} and~\ref{thm:lazy}, wrote the programs of Section~\ref{sec:checks} and prepared the manuscript,
 and a separate Claude model reviewed the proofs. The model, the definitions and the question are due to
-Zuckerman~\cite{Zuc26}, and the upper bound $\rhit=O(1/d)$ on $Q_d$ follows from his Theorem~4.5. The author directed
+Zuckerman~\cite{Zuc26}, and the upper bound $\rhit=O(1/d)$ on $Q_d$ follows from the adversary constructed in the proof of his Theorem~4.5. The author directed
 the work and is responsible for the paper.
 
 \begin{thebibliography}{9}
 \bibitem{ABKLP96} Y.~Azar, A.~Z.~Broder, A.~R.~Karlin, N.~Linial and S.~J.~Phillips, \emph{Biased random walks},
 Combinatorica \textbf{16} (1996), 1--18, \doi{10.1007/BF01300124}.
-\bibitem{Zuc26} D.~Zuckerman, \emph{Markov chain robustness}, in: 17th Innovations in Theoretical Computer Science
-Conference (ITCS 2026), LIPIcs~362, Schloss Dagstuhl--Leibniz-Zentrum f\"ur Informatik, 2026, Paper~118,
-\doi{10.4230/LIPIcs.ITCS.2026.118}.
-\bibitem{Code} Y.~Shmalo, \emph{Hitting-time robustness of the hypercube: source code and paper}, 2026,
-\url{https://github.com/yspennstate/hypercube-hitting-robustness}.
+\bibitem{HSS22} J.~Haslegrave, T.~Sauerwald and J.~Sylvester, \emph{Time dependent biased random walks}, ACM Trans.\ Algorithms \textbf{18} (2022).
 \bibitem{LPW17} D.~A.~Levin and Y.~Peres, \emph{Markov chains and mixing times}, 2nd ed., with contributions by
 E.~L.~Wilmer, American Mathematical Society, Providence, RI, 2017, \doi{10.1090/mbk/107}.
+\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026,
+\url{https://github.com/yspennstate/brain-framework-public/tree/5629e644cdd510173ae97e9aa92642dabd22dc57}.
+\bibitem{Code} Y.~Shmalo, \emph{Hitting-time robustness of the hypercube: source code and paper}, 2026,
+\url{https://github.com/yspennstate/hypercube-hitting-robustness}.
 \bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026,
 \url{https://github.com/yspennstate/math-brain-public/tree/8c9a6bd478c4ec4082347151b7ae16db50c917dd}.
 \bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical research},
-2026, \doi{10.5281/zenodo.24150837},
-\url{https://github.com/yspennstate/math-brain-public/tree/main/papers/math-brain-2026-10-24}.
-\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026,
-\url{https://github.com/yspennstate/brain-framework-public/tree/5629e644cdd510173ae97e9aa92642dabd22dc57}.
+2026, \doi{10.5281/zenodo.24150837}.
+\bibitem{Zuc26} D.~Zuckerman, \emph{Markov chain robustness}, in: 17th Innovations in Theoretical Computer Science
+Conference (ITCS 2026), LIPIcs~362, Schloss Dagstuhl--Leibniz-Zentrum f\"ur Informatik, 2026, Paper~118,
+\doi{10.4230/LIPIcs.ITCS.2026.118}.
 \end{thebibliography}
 
 \end{document}
